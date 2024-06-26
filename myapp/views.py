@@ -14,3 +14,9 @@ def about(request):
 def contact(request):
     return render(request, "myapp/contact.html")
 
+def profile(request, id):
+    user = User.objects.get(id=int(id))
+    birds = user.birds.all()
+    context = {"birds": birds, "user": user}
+    return render(request, "myapp/profile.html", context)
+
