@@ -21,3 +21,4 @@ class Birds(models.Model):
 
 class User(AbstractUser):
     birds = models.ManyToManyField(Birds, blank= True, related_name="birds")
+

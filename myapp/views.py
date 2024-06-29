@@ -1,6 +1,6 @@
 from django.shortcuts import render # type: ignore
 from django.http import HttpResponse # type: ignore
-from .models import Birds, User
+from .models import Birds, User, Country
 from django.db.models import Q # type: ignore
 # Create your views here.
 
