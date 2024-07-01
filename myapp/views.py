@@ -1,7 +1,8 @@
-from django.shortcuts import render # type: ignore
+from django.shortcuts import render, redirect # type: ignore
 from django.http import HttpResponse # type: ignore
 from .models import Birds, User, Country
 from django.db.models import Q # type: ignore
+
 # Create your views here.
 
 def home(request):
@@ -28,3 +29,17 @@ def profile(request, id):
     context = {"birds": birds, "user": user, "headline": headline}
     return render(request, "myapp/profile.html", context)
 
+def adding(request, id):
+    bird = Birds.objects.get(id=id)
+    user = request.user
+    user.birds.add(bird)
+    print(id)
+    return redirect('profile', user.id)
+
+def delete(request, id):
+    bird = Birds.objects.get(id=id)
+    user = request.user
+    if request.method == 'POST':
+        request.user.birds.remove(bird)
+        return redirect('profile', user.id)
+    return render(request, "myapp/delete.html", {'bird': bird})

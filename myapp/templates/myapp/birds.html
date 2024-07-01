@@ -7,7 +7,16 @@
           <h5 class="card-title">{{bird.species}}</h5>
           <span>{{bird.country}}</span>
           <p class="card-text">{{bird.descroption}}...</p>
-        </div>
+          {% if request.user.is_authenticated %}
+              <a href="" class="btn btn-primary">READ</a>
+              {% if bird in request.user.birds.all %}
+                  <a href="{% url 'delete' bird.id %}" class="btn btn-danger">DELETE</a>  
+              {% else %}
+              <a href="{% url 'adding' bird.id %}" class="btn btn-success">ADD</a>
+              {% endif %}
+              
+        {% endif %}
+            </div>
       </div>
       {% endfor %}
     </div>

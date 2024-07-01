@@ -1,5 +1,7 @@
 from django.db import models # type: ignore
 from django.contrib.auth.models import AbstractUser # type: ignore
+
+
 class Country(models.Model):
     region = models.CharField(max_length = 20)
     country = models.CharField(max_length= 30)
