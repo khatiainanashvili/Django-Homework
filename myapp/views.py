@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect # type: ignore
 from django.http import HttpResponse # type: ignore
 from .models import Birds, User, Country
 from django.db.models import Q # type: ignore
-
+from django.contrib.auth import authenticate, login # type: ignore
 # Create your views here.
 
 def home(request):
@@ -43,3 +43,37 @@ def delete(request, id):
         request.user.birds.remove(bird)
         return redirect('profile', user.id)
     return render(request, "myapp/delete.html", {'bird': bird})
+
+
+def login_page(request):
+    page = 'login'
+    if request.user.is_authenticated:
+        return render('home')
+    
+    if request.method == 'POST':
+        username = request.POST.get('username').lower()
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(username=username)
+        except:
+            pass
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            pass
+        
+
+
+    context = {'page': page}
+    return render(request, 'myapp/login-register.html', context)
+
+def register_page(request):
+    page = ''
+    context = {}
+    return render(request, 'myapp/login-register.html', context)
+
+
