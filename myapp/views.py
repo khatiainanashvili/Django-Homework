@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect # type: ignore
 from django.http import HttpResponse # type: ignore
 from .models import Birds, User, Country
 from django.db.models import Q # type: ignore
-from django.contrib.auth import authenticate, login # type: ignore
+from django.contrib.auth import authenticate, login, logout# type: ignore
 # Create your views here.
 
 def home(request):
@@ -70,6 +70,11 @@ def login_page(request):
 
     context = {'page': page}
     return render(request, 'myapp/login-register.html', context)
+
+def log_out(request):
+    logout(request)
+    return redirect('home')
+
 
 def register_page(request):
     page = ''
